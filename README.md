@@ -1,5 +1,133 @@
 # 김시온 [201840111] (JS)
 ---
+## [5월 18일]
+##### 오늘 배운 내용 요약
+
+### Node.js
+
+* 문자열 자료형의 전역 변수
+```
+__filename : 현재 실행 중인 코드의 파일 경로를 나타냄
+__dirname : 현재 실행 중인 코드의 폴더 경로를 나타냄
+```
+
+* Node에서 process 객체의 속성
+```
+argv : 실행 매개 변수를 나타냄 
+env : 컴퓨터 환경과 관련된 정보를 나타냄 
+version : Node.js 버전을 나타냄 
+versions : Niode.js와 종속된 프로그램 버전을 나타냄 arch 프로세서의 아키텍처를 나타냄 
+platform : 플랫폼을 나타냄
+```
+
+* Node에서 process 객체의 메서드
+```
+exit([exitCode =0]) : 프로그램을 종료 
+memoryUsage() : 메모리 사용 정보 객체를 리턴 
+uptime() : 현재 프로그램이 실행된 시간을 리턴
+```
+
+* Node에서 Event
+```
+대부분의 이벤트를 비동기 방식으로 처리, 비동기 방식으로 이벤트를 전달
+
+on(event, listener) : 지정한 이벤트의 리스너를 추가
+once(event, listener) : 지정한 이벤트의 리스너를 추가하지만 한 번 실행한 후에는 자동으로 리스너 제거
+removeListener(event, listener) : 지정한 이벤트에 대한 리스너를 제거
+```
+
+* process 객체의 Event
+```
+exit : 프로세스가 종료될 때 발생
+uncaughtException : 예외가 일어날 때 발생
+```
+
+* OS 모듈
+```
+실제 개발에서 많이 사용되는 모듈은 아니지만 운영체제와 시스템의 정보를 가져올 수 있는 모듈
+CPU나 메모리, 디스크 용량이 얼마나 남았는지 확인이 필요할 때 사용
+사용자가 실행하는 환경에 따라서 값이 다르게 나옴
+
+tmpdir() : 임시 저장 폴더의 위치
+endianness() : CPU의 endianness(BE 또는 LE)
+hostname() : 호스트(컴퓨터) 이름
+type() : 운영체제 이름
+platform() : 운영체제 플랫폼
+arch() : 운영체제 아키텍처
+release() : 운영체제 버전
+uptime() : 운영체제가 실행된 시간
+loadavg() : 로드 에버리지 정보를 담은 배열
+totalmem() : 시스템의 총 메모리
+freemem() : 시스템의 가용 메모리
+cpus() : CPU의 정보를 담은 객체. CPU의 세부 정보를 반환
+networkInterfaces() : 네트워크 인터페이스 정보를 담은 배열
+```
+
+* url 모듈
+```
+url 정보를 객체로 가져와서 분석(parse)
+url 객체를 문자열로 바꿔주는 기능(format, resolve)을 수행
+
+parse(urlStr, [parseQueryString], [slashesDenoteHost]) : 
+    url 문자열(urlStr)을 url 객체로 변환하여 리턴
+format(urlObj) : url 객체를 url 문자열로 변환해 리턴
+resolve(from, to) : 매개 변수를 조합하여 완전한 url 문자열을 생성해 리턴
+```
+
+* FIle System 모듈
+```
+파일 처리와 관련된 작업을 하는 모듈로, 보통 FileSystem을 줄여서 fs 모듈이라고 줄여 부름
+동기적 읽기 방식을 사용하면 파일을 읽으면서 다른 작업을 동시에 할 수 없음
+하지만 비동기적으로 읽으면 파일을 읽으면서 다른 작업도 동시에 수행할 수 있고,
+파일을 다 읽으면 매개변수 callback으로 전달한 함수가 호출 가능
+비동기 형식은 항상 마지막 인수가 수행 완료 시 호출할 콜백 함수로 작성되어야 함
+주로 비동기적 형식을 많이 사용하지만, 
+서버 시작 시 설정 파일을 읽는 작업과 같이 동기적 형식이 더 적절한 경우도 있음
+
+([options]에는 보통 인코딩 방식을 쓰며, 웹에서는 UTF-8을 주로 사용)
+fs.readFile(filename, [options], callback) : 
+    filename의 파일을 [options]의 방식으로 읽은 후 callback으로 전달된 함수를 호출 (비동기적) 
+fs.readFileSync(filename, [options]) : 
+    filename의 파일을 [options]의 방식으로 읽은 후 문자열을 반환 (동기적)
+fs.writeFile(filename, data, [options], callback) : 
+    filename의 파일에 [options]의 방식으로 data 내용을 쓴 후 callback 함수를 호출 (비동기적) 
+fs.writeFileSync(filename, data, [options]) : 
+    filename의 파일에 [options]의 방식으로 data 내용을 씀 (동기적)
+
+동기적 방식의 예외처리 :
+    동기적 방식에서는 자바스크립트의 일반적인 예외처리 방식인 try ~ catch 구문으로 처리
+비동기적 방식의 예외처리 :
+    비동기적 방식에서 예외가 발생하면 callback 함수의 매개변수 err에 전달되므로 따로 try ~ catch 구문을 사용할 필요가 없음
+```
+
+* request 모듈
+```
+웹 요청을 쉽게 만들어 주는 모듈
+Node.js가 기본적으로 제공하는 모듈이 아니라 다른 개인이 제공하는 외부 모듈
+
+request 모듈에서 알아야 하는것 3가지 Jar, Post, Get
+Jar : 쿠키를 저장하는 것, 로그인해서 정보를 가져와야 하는 필요성이 있을 때 사용
+Get : 인터넷 페이지를 사용할 때에 인터넷 주소를 입력하는 것
+Post : 로그인 등 입력창에 값을 넣고 데이터를 보내는 것
+```
+
+* cheerio 모듈
+```
+cheerio 모듈을 사용하면 HTML / XML 데이터에 대해 jQuery(제이쿼리)처럼 임의의 요소를 획득하여 조작할 수 있음
+cheerio모 듈 이것을 이용한 것이 cheerio-httpchli 모듈
+cheerio-httpchli 모듈은 cheerio 모듈에서 웹 페이지 취득 기능을 추가한 것
+
+cheerio : 웹 API나, cheerio-httpchli등으로이미 취득한 데이터에서 임의의 데이터를 가져오는 경우 사용
+cheerio-httpchli : 웹 페이지를 취득하는 경우 cheerio-httpchli 모듈을 사용
+```
+
+* async 모듈
+```
+비동기방식을 동기방식으로 쉽게 바꿔주기 위한 모듈
+```
+
+
+---
 ## [5월 11일]
 ##### 오늘 배운 내용 요약
 
@@ -19,14 +147,14 @@ new Date(year, monthIndex[, day[, hour[, minutes[, seconds[, milliseconds]]]]]);
 ```
 Array 전역 객체는 배열을 생성할 때 사용하는 리스트 형태의 고수준 객체
 
-concat(): 매개변수로 입력한 배열의 요소를 무ㅗ두 합쳐 배열을 만들어 리턴
-join(): 배열 안의 모든 요소를 문자열로 만들어 리턴
-pop()*: 배열의 마지막 요소를 제거하고 리턴
-push()*: 배열의 마지막 부분에 새로운 요소를 추가
-reverse()*: 배열의 요소 순서를 뒤집음
-slice(): 배열 요소의 지정한 부분을 리턴
-sort()*: 배열의 요소를 정렬
-splice()*: 배열 요소의 지정한 부분을 삭제하고 삭제한 요소를 리턴
+concat() : 매개변수로 입력한 배열의 요소를 무ㅗ두 합쳐 배열을 만들어 리턴
+join() : 배열 안의 모든 요소를 문자열로 만들어 리턴
+pop()* : 배열의 마지막 요소를 제거하고 리턴
+push()* : 배열의 마지막 부분에 새로운 요소를 추가
+reverse()* : 배열의 요소 순서를 뒤집음
+slice() : 배열 요소의 지정한 부분을 리턴
+sort()* : 배열의 요소를 정렬
+splice()* : 배열 요소의 지정한 부분을 삭제하고 삭제한 요소를 리턴
 * -> 자기자신을 변화시키는 메서드
 ```
 
@@ -53,8 +181,8 @@ try 블록 바로 뒤에 finally 블록이 오면,
 finally 블록에 있는 코드는 try 블록 안에서의 에러 발생 여부와 관계 없이 무조건 실행
 try 블록 내에서 return, break, continue 등으로 인해 코드의 실행 흐름이 즉시 이동될 때에도 마찬가지
 
-에러가 안 났을 때: try - finally
-에러가 났을 때: try - 에러 발생 - catch - finally
+에러가 안 났을 때 : try - finally
+에러가 났을 때 : try - 에러 발생 - catch - finally
 ```
 
 * 예외 강제 발생
@@ -382,17 +510,17 @@ if문에서 예외를 적을 때 else를 사용
 
 * 강제 자료형 변환
 ```
-Number(): 숫자로 자료형 변환
-String(): 문자열로 자료형 변환
-Boolean(): 불로 자료형 변환
-NaN(Not a Number): 표현 불가능한 수치형 결과를 나타내는 값
+Number() : 숫자로 자료형 변환
+String() : 문자열로 자료형 변환
+Boolean() : 불로 자료형 변환
+NaN(Not a Number) : 표현 불가능한 수치형 결과를 나타내는 값
                     자기 자신과 일치하지 않는 유일한 값 (NaN == NaN 은 false)
 ```
 
 * 일치 연산자
 ```
-===: 자료형과 값이 같은지 비교
-!==: 자료형과 값이 다른지 비교
+=== : 자료형과 값이 같은지 비교
+!== : 자료형과 값이 다른지 비교
 ```
 
 
