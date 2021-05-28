@@ -1,5 +1,143 @@
 # 김시온 [201840111] (JS)
 ---
+## [5월 25일]
+##### 오늘 배운 내용 요약
+
+### express 모듈
+
+* 요청과 응답
+```
+```
+
+* express 모듈의 기본 메소드
+```
+express() : 서버 애플리케이션 객체를 생성
+app.use() : 요청이 왔을 때 실행할 함수를 지정
+app.listen() : 서버를 실행
+```
+
+* 페이지 라우팅 메소드
+```
+라우팅은 애플리케이션 엔드 포인트(URI)의 정의, 그리고 URI가 클라이언트 요청에 응답하는 방식
+
+라우트 메소드는 HTTP 메소드 중 하나로부터 파생, express 클래스의 인스턴스에 연결
+라우트 경로는 요청 메소드와의 조합을 통해, 요청이 이루어질 수 있는 엔드포인트를 정의
+get(path, callback) : GET 요청이 발생했을 대 이벤트 리스너를 지정
+post(path, callback) : POST 요청이 발생했을 대 이벤트 리스너를 지정
+put(path, callback) : PUT 요청이 발생했을 대 이벤트 리스너를 지정
+delete(path, callback) : DELETE 요청이 발생했을 대 이벤트 리스너를 지정
+all(path, callback) : 모든 요청이 발생했을 대 이벤트 리스너를 지정
+```
+
+* response 객체
+```
+response객체는 서버가 클라이언트의 요청에 응답하는 정보를 담고 있는 객체
+send() : 데이터 본문을 제공합니다.
+status() : 상태 코드를 제공합니다.
+set() : 헤더를 설정합니다.
+```
+
+* Content-Type
+```
+서버가 Content-Type을 제공하면 웹 브라우저는 헤더를 확인, 데이터의 형태를 확인(MIME라는 문자열로 제공)
+```
+
+* MIME 형식
+```
+text : 텍스트를 포함하는 모든 문서를 나타내며 이론상으로는 인간이 읽을 수 있어야 함
+    (text/plain, text/html, text/css, text/javascript)
+image : 모든 종류의 이미지를 나타냄, 애니메이션되는 이미지가 이미지 타입에 포함
+    (image/gif, image/png, image/jpeg, image/bmp, image/webp)
+audio : 모든 종류의 오디오 파일들을 나타냄
+    (audio/midi, audio/mpeg, audio/webm, audio/ogg, audio/wav)
+video : 모든 종류의 비디오 파일들을 나타냄
+    (video/webm, video/ogg)
+application : 모든 종류의 이진 데이터를 나타냄
+    (application/octet-stream, application/pkcs12, application/vnd.mspowerpoint, 
+    application/xhtml+xml, application/xml,  application/pdf)
+```
+
+* HTTP 상태 코드
+```
+1XX : 처리 중(100 Continue)
+2XX : 성공(200 OK)
+3XX : 리다이렉트 (300 Multiple Choices)
+4XX : 클라이언트 오류 (400 Bad Request)
+5XX : 서버 오류 (500 Internal Server Error)
+```
+
+* 리다이렉트
+```
+HTTP 리다이렉트는 3xx 상태 코드를 지닌 응답
+리다이렉트 응답을 수신한 브라우저는, 제공된 새로운 URL을 사용하며 그것을 즉시 로드
+대부분 리다이렉션은 사용자에게는 보이지 않는데다가, 적은 성능 저하를 일으킴
+redirect() : 리다이렉트 함
+```
+
+* request 객체의 메서드
+```
+params : 라우팅 매개변수 추출
+query : 요청 매개변수 추출
+headers : 요청 헤더 추출
+header() : 요청 헤더의 속성을 지정, 또는 추출
+accepts(type) : 요청 헤더의 accept 속성 확인
+is(type) : 요청 헤더의 Content-Type 속성 확인
+```
+
+* 주소 분석
+```
+프로토콜(HTTPS) : 통신에 상요되는 규칙을 의미
+호스트((search.)naver.com) : 애플리케이션 서버(또는 분산 장치 등)의 위치를 의미
+URL(sarch.naver) : 애플리케이션 서버 내부에서 라우트 위치를 나타냄
+요청 매개 변수(?q = QA) : 추가적인 정보를 의미함
+```
+
+* 미들웨어(Middleware)
+```
+미들웨어는 양 쪽을 연결하여 데이터를 주고받을 수 있도록 중간에서 매개 역할을 하는 소프트웨어
+트워크를 통해서 연결된 여러 개의 컴퓨터에 있는 많은 프로세스들에게 어떤 서비스를 사용할 수 있도록 연결해주는 소프트웨어
+
+이점
+ - 표준화된 인터페이스 제공 가능
+ - 다양한 환경 지원, 체계가 다른 업무와 상호 연동이 가능
+ - 분산된 업무를 동시에 처리 가능하여 자료의 일관성이 유지
+ - 부하의 분산이 가능
+```
+
+* body-parser 미들웨어
+```
+HTTPpost put 요청시 request body 에 들어오는 데이터값을 읽을 수 있는 구문
+파싱함과 동시에 req.body 로 입력해주어 응답 과정에서 요청에 body 프로퍼티를 새로이 쓸 수 있게 해주는 미들웨어
+
+요청 본문의 종류
+application/x-www-form-urlencoded : 웹 브라우저에서 입력 양식을 POST, PUT, DELETE 방식 등으로
+전달할 때 사용하는 기본적인 요청 형식
+application/json : JSON 데이터로 요청하는 방식
+multipart/form-data : 대용량 파일을 전송할 때 사용하는 요청 방식
+```
+
+* RESTful 웹 서비스
+```
+RESTful 웹 서비스
+method(route) : Explanation
+GET(/user) : 모든 사용자 정보를 조회
+POST(/user) : 사용자를 추가
+GET(/user/:id) : 특정 사용자 정보를 조회
+PUT(/user/:id) : 특정 사용자 정보를 수정
+DELETE(/user/:id) : 특정 사용자 정보를 제거
+
+
+RESTful 웹 서비스의 구조
+method        /collection                   /collection/id
+GET :       컬렉션을 조회                  컬력션의 특정 요소를 조회
+POST :      컬렉션에 새로운 데이터를 추가   사용하지 않음
+PUT :       컬렉션 전체를 한꺼번에 변경     컬렉션에 특정 요소를 수정
+DELETE :    컬렉션 전체를 삭제             컬렉션의 특정 요소를 삭제
+```
+
+
+
+---
 ## [5월 18일]
 ##### 오늘 배운 내용 요약
 
@@ -301,17 +439,17 @@ property(속성): 객체 내부에 있는 값 하나하나
 * 선언적 함수
 ```
 선언적 함수는 함수를 선언할 때 이름을 붙여주는 함수
-따로 변수에 넣어주지 않고 선언할 대 붙여준 이름으로 호출하면 된다.
+따로 변수에 넣어주지 않고 선언할 대 붙여준 이름으로 호출
 ```
 
 * 화살표 함수
 ```
-화살표 함수는 본문이 한 줄인 함수를 작성할 때 유용하다.
-본문이 한 줄이 아니라면 다른 방법으로 화살표 함수를 작성해야 합니다.
-    1. 중괄호 없이 작성: (...args) => expression – 화살표 오른쪽에 표현식을 둡니다.
-        함수는 이 표현식을 평가하고, 평가 결과를 반환합니다.
-    2. 중괄호와 함께 작성: (...args) => { body } – 본문이 여러 줄로 구성되었다면 중괄호를 사용해야 합니다.
-        다만, 이 경우는 반드시 return 지시자를 사용해 반환 값을 명기해 주어야 합니다.
+화살표 함수는 본문이 한 줄인 함수를 작성할 때 유용
+본문이 한 줄이 아니라면 다른 방법으로 화살표 함수를 작성해야 함
+    1. 중괄호 없이 작성: (...args) => expression – 화살표 오른쪽에 표현식을 둠
+        함수는 이 표현식을 평가하고, 평가 결과를 반환
+    2. 중괄호와 함께 작성: (...args) => { body } – 본문이 여러 줄로 구성되었다면 중괄호를 사용해야 함
+        다만, 이 경우는 반드시 return 지시자를 사용해 반환 값을 명기해 주어야 함
 ```
 
 * 함수의 기본 형태
