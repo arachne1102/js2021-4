@@ -1,5 +1,217 @@
 # 김시온 [201840111] (JS)
 ---
+## [6월 01일]
+##### 오늘 배운 내용 요약
+
+### 웹 브라우저의 자바스크립트
+
+* 사용할 수 없는 코드
+```
+최신 버전 자바스크립트 코드             인터넷 익스플로러에서 사용해야 하는 코드
+
+- let 키워드와 const 키워드
+let variable = 273;                     var variableA = 273;
+const constant = "Hello World";         var variable = "Hello World";
+
+- 템플릿 문자열
+let variable = 273;                     var variable = 273;
+console.log                             console.log
+(`변수의 값은 ${variable}입니다.`);      ('변수의 값은 ' + variable + '입니다.');
+
+- 화살표 함수
+const functionLiteral = () => {         const functionLiteral = function () {
+
+};                                      };
+
+- for of 반복문
+const array = ['가', '나', '다'];       var array = ['가', '나', '다'];
+
+for (let item of array) {               for (var item in array) { 
+    console.log(item);                      console.log(array[i]);
+}                                       }
+
+- 사용할 수 없는 메소드
+const array = [1, 2, 3, 4, 5];          const array = [1, 2, 3, 4, 5];
+
+array.forEach((item, index) => {        for (var i = 0; i < array.length; i++) {
+    console.log(`${item}: ${index}`);       var index = i;
+});                                         var item = array[i];
+                                            console.log(item + ' : ' + index);
+                                        }
+```
+
+* Window 객체
+```
+alert(<메시지>) : 경고창을 출력합니다.
+prompt(<메시지>, <임시 글자>) : 프롬프트를 출력합니다.
+```
+
+* screen 객체
+```
+width : 화면의 너비
+height : 화면의 높이
+availWidth : 실제 화면에서 사용 가능한 너비
+availHeight : 실제 화면에서 사용 가능한 높이
+colorDepth : 사용 가능한 색상 수
+pixelDepth : 한 픽셀당 비트 수
+```
+
+* location 객체와 history 객체
+```
+- location 객체
+herf : 문서의 URL 주소
+host : 호스트 이름과 포트 번호 ex) localhost:52273
+hostname : 호스트 이름 ex) localhost
+port : 포트 번호 ex) 52273
+pathname : 디렉터리 경로 ex) /folder/HTMLPage/html
+hash : 앵커 이름(#~) ex) #test
+search: 요청 매개 변수 ex) ?param=10
+protocol : 프로토콜 종류 ex) http:
+
+-location 객체의 메소드
+assign(<링크>) : 매개 변수로 전달한 위치로 이동
+reload() : 새로고침함
+replace() : 매개 변수로 전달한 위치로 이동(뒤로 가기 불가능)
+
+- history 객체의 메소드
+forward() : 앞으로 이동
+back() : 뒤로 이동
+```
+
+* navigator 객체
+```
+appCodeName : 웹 브라우저의 코드 이름
+appName : 웹 브라우저의 이름
+appVersion : 웹 브라우저의 버전
+platform : 사용 중인 운영체제의 시스템 환경
+userAgent : 웹 브라우저의 전체적인 정보
+```
+
+
+### 문서 객체 모델
+
+* 1개의 문서 객체를 선택하는 메소드
+```
+document.getElementByld(아이디) : 아이디를 사용해 문서 객체를 선택
+document.querySelector(선택자) : 선택자를 사용해 문서 객체를 선택
+```
+
+* 여러개의 문서 객체를 선택하는 메소드
+```
+document.getElementsByName(이름) : name 속성으로 여러 개의 문서 객체를 선택
+document.getElementsByClassName(클래스) : class 속성으로 여러 개의 문서 객체를 선택
+document.querySelectorAll : 선택자로 여러 개의 문서 객체를 선택
+```
+
+* 글자를 조작하는 속성
+```
+innerHTML : 문서 객체 내부의 문자를 나타냄
+```
+
+* 스타일 조작
+```
+스타일시트의 스타일 속성        자바스크림트의 스타일 속성
+background-color                backgroundColor
+border-radius                   borderRadius
+border-aottom                   borderBottom
+```
+
+* 문서 객체의 속성 조작 메소드
+```
+setAttribute(속성 이름, 속성 값) : 속성을 지정
+getAttribute(속성 이름) : 속성을 추출
+```
+
+
+### jQuery
+
+* 문서 객체 개별 조작
+```
+- 선택된 문서 객체의 수
+length : 선택된 문서 객체의 수를 구함
+
+- 선택된 문서 객체 추출
+get() : 선택한 문서 객체 중 하나를 선택
+
+- 선택된 문서 객체 반복 적용
+each() : 선택한 문서 객체에 반복을 적용
+
+- each() 메소드의 콜백 함수
+Array 객체의 forEach() 메소드           jQuery의 each() 메소드
+[].forEach(function (item, index) {     $('h1').each(function (index,item) {
+
+});                                     });
+```
+
+* 문서 객체 조작
+```
+- 문서 조작 메소드
+text() : html 태그 내부의 문자를 조작
+htmll() : html 태그 내부의 문자를 조작(HTML 태그 인식)
+
+- 스타일 조작 메소드
+css() : 스타일을 조작
+
+- 속성 조작 메소드
+attr() : 속성을 조작
+```
+
+* 문서 객체 생성
+```
+- 문서 객체 추가 메소드
+$(<A>).prependTO(<B>) : A를 B안쪽 앞에 추가
+$(<A>).appendTO(<B>) : A를 B안쪽 뒤에 추가
+$(<A>).insertBefore(<B>) : A를 B 앞에 추가
+$(<A>).insertAfter(<B>) : A를 B 뒤에 추가
+```
+
+* 이벤트
+```
+- jQuery의 이벤트 메소드
+on() : 이벤트 연셜
+off() : 이벤트 제거
+
+- 키보드 이벤트
+keydown() : 해당 영역에서 키보드를 눌렀을 때에 발생
+keypress() : 해당 영역에서 키보드를 계속 누르고 있을 때에 발생
+keyup() : 해당 영역에서 키보드를 눌렀다가 떼었을 때 발생
+
+- 마우스 이벤트
+click() : 노드(elements)를 마우스 포인터로 눌렀다가 떼었을 때에 발생
+dblclick() : 노드를 더블 클릭 했을 때에 발생
+hover() : mouseenter와 mouseleave 이벤트를 한번에 bind한다.
+mousedown() : 노드 영역에서 마우스를 눌렀다가 떼었을 때에 발생
+mouseenter() : 노드에 마우스가 진입했을 때에 발생(자식노드에서는 이벤트를 감지 못함)
+mouseleave() : 마우스가 노드에서 벗어났을 때에 발생
+mousemove() : 노드 영역에서 마우스를 움직였을 때에 발생
+mouseout() : 노드에서 마우스 포인터가 떠났을 때에 발생
+mouseover() : 노드 영역에서 마우스를 올려놓았을 때 발생 (내부노드까지 이벤트를 감지)
+mouseup() : 마우스 포인터를 노드에 올려놓고 마우스 버튼을 눌렀다 떼었을 때에 발생
+toggle() : click 이벤트에 핸들러를 바인딩하고 클릭할 때마다 실행될 함수들을 차례대로 실행
+
+- 입력 양식 이벤트
+blur() : 노드에서 포커스가 떠날 때에 발생
+change() : 노드의 값이 변경될 때에 발생
+focus() : 노드가 포커스를 획득했을 때에 발생
+select() : 유저가 텍스트를 선택했을 때에 발생
+submit() : 폼의 내용을 전송할 때에 발생
+
+- 웹 브라우저 이벤트
+resize() : 웹브라우저 윈도우 사이즈의 변화가 있을 때
+scroll() : 스크롤이 움직일 때에 발생
+
+- 이벤트를 한 번만 연결하는 메소드
+one() : 이벤트를 한 번만 연결
+```
+
+* 애니메이션
+```
+- 애니메이션 메소드
+animate() : 애니메이션을 적용
+```
+
+
+---
 ## [5월 25일]
 ##### 오늘 배운 내용 요약
 
